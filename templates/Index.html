@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommendation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1c1c1c;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        h2 {
+            margin: 10px 0;
+        }
+        .anime-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        .anime-card {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .description {
+            font-size: 14px;
+            text-align: justify;
+        }
+        button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e55b3a;
+        }
+        .site-tv {
+            background-color: #2a2a2a;
+        }
+        .site-best {
+            background-color: #3a3a3a;
+        }
+    </style>
+</head>
+<body>
+    <h1>Anime Recommendations</h1>
+    <form method="post">
+        <label for="number_of_anime">Select number of anime to recommend (1-20):</label>
+        <input type="range" id="number_of_anime" name="number_of_anime" min="1" max="20" value="1" oninput="this.nextElementSibling.value = this.value">
+        <output>1</output>
+        <br>
+        <button type="submit">Get Recommendations</button>
+    </form>
+
+    <div class="anime-container">
+        {% for anime in anime_details %}
+        <div class="anime-card {{ 'site-tv' if anime.site == 'tv' else 'site-best' }}">
+            <h2>{{ anime.title }}</h2>
+            <img src="{{ anime.image_url }}" alt="Anime Poster">
+            <p class="description">{{ anime.description }}</p>
+            <a href="{{ anime.url }}" target="_blank" style="color: #ff6347;">View on {{ 'Anilibria.tv' if anime.site == 'tv' else 'Anilibria.best' }}</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
