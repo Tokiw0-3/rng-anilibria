@@ -137,7 +137,8 @@ def index():
         return render_template('index.html', anime_details=anime_details)
 
     return render_template('index.html', anime_details=[])
-
+    
 if __name__ == "__main__":
-app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8080)
+
 
