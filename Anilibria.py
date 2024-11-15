@@ -3,27 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 import random
 from flask import Flask, render_template, request
-import subprocess
-import time
 
 app = Flask(__name__)
-
-# Function to start the SSH tunnel
-def start_ssh_tunnel():
-    ssh_command = [
-        "ssh",
-        "-p", "443",
-        "-o", "StrictHostKeyChecking=no",
-        "-o", "ServerAliveInterval=30",
-        "-t",
-        "-R0:localhost:5000",
-        "qr@eu.a.pinggy.io",
-        "x:https"
-    ]
-    # Start the SSH tunnel in a separate process
-    process = subprocess.Popen(ssh_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    time.sleep(5)  # Wait a few seconds to ensure the tunnel is established
-    return process
 
 # Fetch anime from anilibria.tv
 def fetch_anilibria_tv_anime():
@@ -159,12 +140,4 @@ def index():
     return render_template('index.html', anime_details=[])
 
 if __name__ == "__main__":
-    # Start the SSH tunnel
-    ssh_process = start_ssh_tunnel()
-    
-    # Run the Flask app (now replace debug=True with host and port for production)
-    try:
-        app.run(debug=True, host='0.0.0.0', port=5000)
-    finally:
-        # Terminate the SSH tunnel when the app is stopped
-        ssh_process.terminate()
+    app.run(debug=True, host='0.0.0.0', port=5000)
